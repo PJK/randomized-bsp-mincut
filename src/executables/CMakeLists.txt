@@ -4,8 +4,7 @@ file(GLOB SOURCES ../*.cpp)
 
 
 add_executable(square_root square_root.cpp ${SOURCES} ../input/InputIterator.cpp ${KS_FILES} ${RC_FILES})
-target_link_libraries(square_root /Users/pavel/Downloads/mpiP-3.4.1/lib/libmpiP.a)
-#target_link_libraries(square_root ${MPI_LIBRARIES})
+target_link_libraries(square_root ${MPI_LIBRARIES})
 
 add_executable(square_root_project_gigaedge square_root_project_gigaedge.cpp ${SOURCES} ../input/InputIterator.cpp ${KS_FILES} ${RC_FILES})
 target_link_libraries(square_root_project_gigaedge ${MPI_LIBRARIES})
