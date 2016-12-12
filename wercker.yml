@@ -1,0 +1,30 @@
+box: ubuntu
+build:
+  steps:
+    - script:
+      name: Install GCC and dependencies
+      code: |
+        sudo apt-get -y update
+        sudo apt-get -y install gcc g++ wget python cppcheck cmake openmpi-bin openmpi-common libopenmpi-dev openmpi-bin libboost-all-dev python3 python3-pip
+        pip3 install networkx
+    - script:
+      name: Show base information
+      code: |
+        gcc -v
+    - script:
+      name: CPPCheck
+      code: |
+        cppcheck .
+    - script:
+      name: Compile
+      code: |
+        export SOURCE_DIR=$(pwd)
+        export BUILD_DIR=$(mktemp -d /tmp/cbor_build.XXXX)
+        cd $BUILD_DIR
+        cmake $SOURCE_DIR
+        make
+    - script:
+      name: Sanity check
+      code: |
+        $SOURCE_DIR/utils/generate.py 'cycle_graph(N)' 200 > graph.in
+        $BUILD_DIR/src/executables/square_root 0.95 graph.in 1
